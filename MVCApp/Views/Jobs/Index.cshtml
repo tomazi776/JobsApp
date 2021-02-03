@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MVCApp.Models.Job>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create Job", "Create")
+    @Html.ActionLink("Process jobs", "Process")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var job in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => job.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => job.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { jobId = job.JobId })
+        </td>
+    </tr>
+}
+
+</table>

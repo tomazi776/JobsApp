@@ -1,0 +1,11 @@
+C:\Users\Tomek\source\repos\MVCApp\DataLib\bin\Debug\DataLib.dll
+C:\Users\Tomek\source\repos\MVCApp\DataLib\bin\Debug\DataLib.pdb
+C:\Users\Tomek\source\repos\MVCApp\DataLib\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Tomek\source\repos\MVCApp\DataLib\bin\Debug\EntityFramework.dll
+C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.csprojAssemblyReference.cache
+C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.csproj.CoreCompileInputs.cache
+C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.csproj.CopyComplete
+C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.dll
+C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.pdb
+C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.Migrations.FailedCounter.resources
+C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.csproj.GenerateResource.cache
