@@ -1,4 +1,5 @@
 ﻿using DataLib;
+using DataLib.Services;
 using MVCApp.Helpers;
 using MVCApp.Models;
 using MVCApp.Services;
@@ -22,9 +23,13 @@ namespace MVCApp.Controllers
         // GET: Tasks
         public ActionResult Index()
         {
-            DataLib.Services.IJobsRepository jobsRepository = new DataLib.Services.JobsRepository();
-            var modelJobs = jobsRepository.GetAllJobs();
-            List<Job> viewJobs = ModelMapper.MapAll(modelJobs);
+            List<Job> viewJobs = new List<Job>();
+            using (ZavenContext ctx = new ZavenContext())
+            {
+                IJobsRepository jobsRepository = new JobsRepository(ctx);
+                var modelJobs = jobsRepository.GetAllJobs();
+                viewJobs = ModelMapper.MapAll(modelJobs);
+            }
             return View(viewJobs);
         }
 
@@ -49,16 +54,19 @@ namespace MVCApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                DataLib.Services.IJobsRepository jobsRepository = new DataLib.Services.JobsRepository();
-                var modelJob = CreateMappedJob(name, doAfter);
-                var affectedRows = jobsRepository.SaveJob(modelJob);
-                if (affectedRows < 1)
+                using (ZavenContext ctx = new ZavenContext())
                 {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Index");
+                    IJobsRepository jobsRepository = new JobsRepository(ctx);
+                    var modelJob = CreateMappedJob(name, doAfter);
+                    var affectedRows = jobsRepository.SaveJob(modelJob);
+                    if (affectedRows < 1)
+                    {
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
             }
             return View();

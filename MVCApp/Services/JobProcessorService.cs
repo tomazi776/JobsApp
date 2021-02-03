@@ -15,9 +15,15 @@ namespace ZavenDotNetInterview.App.Services
 {
     public class JobProcessorService : IJobProcessorService
     {
+        private readonly ZavenContext _ctx;
+        public JobProcessorService(ZavenContext ctx)
+        {
+            _ctx = ctx;
+        }
+
         public void ProcessJobs()
         {
-            DataLib.Services.IJobsRepository jobsRepository = new DataLib.Services.JobsRepository();
+            IJobsRepository jobsRepository = new JobsRepository(_ctx);
             var allJobs = jobsRepository.GetAllJobs();
             var jobsToProcess = allJobs.Where(x => x.Status == JobStatus.New || x.Status == JobStatus.Failed).ToList();
 

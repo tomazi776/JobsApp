@@ -46,7 +46,6 @@ namespace MVCApp
             // container.LoadConfiguration();
 
             // TODO: Register your type's mappings here.
-            container.RegisterInstance(new ZavenContext(), InstanceLifetime.Singleton);
             container.RegisterType<IJobsRepository, JobsRepository>(new ContainerControlledLifetimeManager());
             container.RegisterType<IJobProcessorService, JobProcessorService>();
         }
