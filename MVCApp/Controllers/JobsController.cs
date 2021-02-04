@@ -1,5 +1,6 @@
 ﻿using DataLib;
 using DataLib.Services;
+using DataLib.Utilities;
 using MVCApp.Helpers;
 using MVCApp.Models;
 using MVCApp.Services;
@@ -14,10 +15,12 @@ namespace MVCApp.Controllers
 {
     public class JobsController : Controller
     {
-        private readonly IJobProcessorService _jobProcessorService;
-        public JobsController(IJobProcessorService jobProcessorService)
+        private readonly IJobProcessorService jobProcessorService;
+        private readonly ILogger logger;
+        public JobsController(IJobProcessorService jobProcessorService, ILogger logger)
         {
-            _jobProcessorService = jobProcessorService;
+            this.jobProcessorService = jobProcessorService;
+            this.logger = logger;
         }
 
         // GET: Tasks
@@ -38,7 +41,7 @@ namespace MVCApp.Controllers
         [NoAsyncTimeout]
         public ActionResult Process()
         {
-            _jobProcessorService.ProcessJobs();
+            jobProcessorService.ProcessJobs();
             return RedirectToAction("Index");
         }
 
@@ -57,15 +60,17 @@ namespace MVCApp.Controllers
                 using (ZavenContext ctx = new ZavenContext())
                 {
                     IJobsRepository jobsRepository = new JobsRepository(ctx);
-                    var modelJob = CreateMappedJob(name, doAfter);
-                    var affectedRows = jobsRepository.SaveJob(modelJob);
-                    if (affectedRows < 1)
+                    var job = CreateMappedJob(name, doAfter);
+                    var affectedRows = jobsRepository.SaveJob(job);
+                    if (affectedRows > 0)
                     {
-                        return View();
+                        logger.Log(LogTarget.Database, ctx, null, job.Id, "Job created successfully");
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        return RedirectToAction("Index");
+                        logger.Log(LogTarget.Database, ctx, null, job.Id, "Job not created");
+                        return View();
                     }
                 }
             }

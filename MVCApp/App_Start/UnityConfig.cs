@@ -48,6 +48,7 @@ namespace MVCApp
             // TODO: Register your type's mappings here.
             container.RegisterType<IJobsRepository, JobsRepository>(new ContainerControlledLifetimeManager());
             container.RegisterType<IJobProcessorService, JobProcessorService>();
+            container.RegisterType<ILogger, Logger>();
         }
     }
 }

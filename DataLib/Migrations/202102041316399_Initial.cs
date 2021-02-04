@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FailedCounter : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -11,8 +11,7 @@
                 "dbo.Jobs",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        JobId = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false),
                         Name = c.String(maxLength: 50),
                         Status = c.Int(nullable: false),
                         DoAfter = c.DateTime(),
@@ -30,18 +29,17 @@
                         Description = c.String(),
                         CreatedAt = c.DateTime(nullable: false),
                         JobId = c.Guid(nullable: false),
-                        Job_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Jobs", t => t.Job_Id)
-                .Index(t => t.Job_Id);
+                .ForeignKey("dbo.Jobs", t => t.JobId, cascadeDelete: true)
+                .Index(t => t.JobId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Logs", "Job_Id", "dbo.Jobs");
-            DropIndex("dbo.Logs", new[] { "Job_Id" });
+            DropForeignKey("dbo.Logs", "JobId", "dbo.Jobs");
+            DropIndex("dbo.Logs", new[] { "JobId" });
             DropIndex("dbo.Jobs", new[] { "Name" });
             DropTable("dbo.Logs");
             DropTable("dbo.Jobs");

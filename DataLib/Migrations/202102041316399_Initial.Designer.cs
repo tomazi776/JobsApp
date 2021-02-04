@@ -7,13 +7,13 @@ namespace DataLib.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class FailedCounter : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FailedCounter));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202012091738207_FailedCounter"; }
+            get { return "202102041316399_Initial"; }
         }
         
         string IMigrationMetadata.Source

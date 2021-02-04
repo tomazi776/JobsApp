@@ -13,7 +13,7 @@ namespace MVCApp.Helpers
             {
                 var viewJob = new Job()
                 {
-                    JobId = job.JobId,
+                    JobId = job.Id,
                     Name = job.Name,
                     Status = job.Status,
                     DoAfter = job.DoAfter
@@ -27,7 +27,7 @@ namespace MVCApp.Helpers
         {
             return new MVCApp.Models.Job()
             {
-                JobId = modelJob.JobId,
+                JobId = modelJob.Id,
                 Name = modelJob.Name,
                 DoAfter = modelJob.DoAfter,
                 Status = modelJob.Status
@@ -38,7 +38,7 @@ namespace MVCApp.Helpers
         {
             return new DataLib.Models.Job()
             {
-                JobId = viewJob.JobId,
+                Id = viewJob.JobId,
                 Name = viewJob.Name,
                 DoAfter = viewJob.DoAfter,
                 LastUpdatedAt = DateTime.Now,

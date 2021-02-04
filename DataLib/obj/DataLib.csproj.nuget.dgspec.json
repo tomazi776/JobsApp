@@ -1,26 +1,22 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tomek\\source\\repos\\MVCApp\\DataLib\\DataLib.csproj": {}
+    "C:\\src\\JobsApp\\DataLib\\DataLib.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tomek\\source\\repos\\MVCApp\\DataLib\\DataLib.csproj": {
+    "C:\\src\\JobsApp\\DataLib\\DataLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tomek\\source\\repos\\MVCApp\\DataLib\\DataLib.csproj",
+        "projectUniqueName": "C:\\src\\JobsApp\\DataLib\\DataLib.csproj",
         "projectName": "DataLib",
-        "projectPath": "C:\\Users\\Tomek\\source\\repos\\MVCApp\\DataLib\\DataLib.csproj",
-        "packagesPath": "C:\\Users\\Tomek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tomek\\source\\repos\\MVCApp\\DataLib\\obj\\",
+        "projectPath": "C:\\src\\JobsApp\\DataLib\\DataLib.csproj",
+        "packagesPath": "C:\\Users\\Tomasz\\.nuget\\packages\\",
+        "outputPath": "C:\\src\\JobsApp\\DataLib\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Tomek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Tomasz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net461"
