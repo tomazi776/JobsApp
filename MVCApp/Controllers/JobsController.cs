@@ -61,17 +61,29 @@ namespace MVCApp.Controllers
                 {
                     IJobsRepository jobsRepository = new JobsRepository(ctx);
                     var job = CreateMappedJob(name, doAfter);
-                    var affectedRows = jobsRepository.SaveJob(job);
-                    if (affectedRows > 0)
+                    try
                     {
-                        logger.Log(LogTarget.Database, ctx, null, job.Id, "Job created successfully");
+                        jobsRepository.SaveJob(job);
+                        logger.Log(LogTarget.Database, ctx, null, job.Id, $"Job '{job.Name}' created successfully");
                         return RedirectToAction("Index");
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        logger.Log(LogTarget.Database, ctx, null, job.Id, "Job not created");
+                        var existingJobId = ctx.Jobs.Where(j => j.Name == job.Name).First().Id;
+                        logger.Log(LogTarget.Database, ctx, ex, existingJobId, $"Job '{job.Name}' not created due to exception.");
                         return View();
                     }
+
+                    //if (affectedRows > 0)
+                    //{
+                    //    logger.Log(LogTarget.Database, ctx, null, job.Id, "Job created successfully");
+                    //    return RedirectToAction("Index");
+                    //}
+                    //else
+                    //{
+                    //    logger.Log(LogTarget.Database, ctx, null, job.Id, "Job not created");
+                    //    return View();
+                    //}
                 }
             }
             return View();

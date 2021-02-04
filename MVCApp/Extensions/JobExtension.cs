@@ -1,18 +1,24 @@
 ﻿using DataLib;
+using DataLib.Services;
 using MVCApp.Helpers;
+using System;
 
 namespace MVCApp.Extensions
 {
     internal static class JobExtension
     {
-        public static void ChangeStatus(this DataLib.Models.Job job, JobStatus newStatus)
+        public static void ChangeStatus(this DataLib.Models.Job job, JobStatus newStatus, ZavenContext ctx, ILogger logger)
         {
             if (newStatus == JobStatus.Failed)
             {
                 job.FailedCounter++;
-                //SingleJobsFailedCounter.Instance.FailedJobs.Add(job);
             }
 
+            logger.Log(
+                DataLib.Utilities.LogTarget.Database,
+                ctx, null,
+                job.Id,
+                $"Changed '{job.Name}' status to - '{newStatus}'");
             job.Status = job.FailedCounter < 5 ? newStatus : JobStatus.Closed;
         }
     }

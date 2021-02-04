@@ -11,16 +11,24 @@ namespace DataLib.Utilities
             this.ctx = ctx;
         }
 
-        public override void Log(Guid processedJobId, Exception ex)
+        public override void Log(Guid processedJobId, Exception ex, string msg)
         {
             var log = new Log()
             {
                 Id = Guid.NewGuid(),
                 JobId = processedJobId,
                 CreatedAt = DateTime.Now,
-                Description = BuildLogs(ex)
+                Description = BuildLogs(ex, msg)
             };
-            ctx.Logs.Add(log);
+            using (ZavenContext context = new ZavenContext())
+            {
+
+                context.Logs.Add(log);
+                context.SaveChanges();
+            }
+
+            //ctx.Logs.Add(log);
+            //ctx.SaveChanges();
         }
 
         public override void Log(Guid processedJobId, string msg)
@@ -32,7 +40,6 @@ namespace DataLib.Utilities
                 CreatedAt = DateTime.Now,
                 Description = msg,
             };
-
             ctx.Logs.Add(info);
             ctx.SaveChanges();
         }

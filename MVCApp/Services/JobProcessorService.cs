@@ -15,20 +15,23 @@ namespace ZavenDotNetInterview.App.Services
 {
     public class JobProcessorService : IJobProcessorService
     {
-        private readonly ZavenContext _ctx;
-        public JobProcessorService(ZavenContext ctx)
+        private readonly ZavenContext ctx;
+        private readonly ILogger logger;
+
+        public JobProcessorService(ZavenContext ctx, ILogger logger)
         {
-            _ctx = ctx;
+            this.ctx = ctx;
+            this.logger = logger;
         }
 
         public void ProcessJobs()
         {
-            IJobsRepository jobsRepository = new JobsRepository(_ctx);
+            IJobsRepository jobsRepository = new JobsRepository(ctx);
             var allJobs = jobsRepository.GetAllJobs();
             var jobsToProcess = allJobs.Where(x => x.Status == JobStatus.New || x.Status == JobStatus.Failed).ToList();
 
             // check performance
-            jobsToProcess.ForEach(job => job.ChangeStatus(JobStatus.InProgress));
+            jobsToProcess.ForEach(job => job.ChangeStatus(JobStatus.InProgress, ctx, logger));
             List<DataLib.Models.Job> processedJobs = new List<DataLib.Models.Job>();
             //Parallel.ForEach(jobsToProcess, (currentjob) =>
             //{
@@ -79,7 +82,7 @@ namespace ZavenDotNetInterview.App.Services
 
         private void UpdateJobStatus(IJobsRepository jobsRepository, JobStatus status, DataLib.Models.Job job)
         {
-            job.ChangeStatus(JobStatus.Done);
+            job.ChangeStatus(JobStatus.Done, ctx, logger);
             jobsRepository.Update(job);
         }
     }
