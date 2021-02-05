@@ -1,28 +1,34 @@
 ﻿using DataLib;
 using DataLib.Services;
 using MVCApp.Extensions;
-using MVCApp.Helpers;
-using MVCApp.Models;
 using MVCApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
+
 
 namespace ZavenDotNetInterview.App.Services
 {
     public class JobProcessorService : IJobProcessorService
     {
+        private readonly ZavenContext ctx;
+        private readonly ILogger logger;
+
+        public JobProcessorService(ZavenContext ctx, ILogger logger)
+        {
+            this.ctx = ctx;
+            this.logger = logger;
+        }
+
         public void ProcessJobs()
         {
-            DataLib.Services.IJobsRepository jobsRepository = new DataLib.Services.JobsRepository();
+            IJobsRepository jobsRepository = new JobsRepository(ctx);
             var allJobs = jobsRepository.GetAllJobs();
             var jobsToProcess = allJobs.Where(x => x.Status == JobStatus.New || x.Status == JobStatus.Failed).ToList();
 
             // check performance
-            jobsToProcess.ForEach(job => job.ChangeStatus(JobStatus.InProgress));
+            jobsToProcess.ForEach(job => job.ChangeStatus(JobStatus.InProgress, ctx, logger));
             List<DataLib.Models.Job> processedJobs = new List<DataLib.Models.Job>();
             //Parallel.ForEach(jobsToProcess, (currentjob) =>
             //{
@@ -73,7 +79,7 @@ namespace ZavenDotNetInterview.App.Services
 
         private void UpdateJobStatus(IJobsRepository jobsRepository, JobStatus status, DataLib.Models.Job job)
         {
-            job.ChangeStatus(JobStatus.Done);
+            job.ChangeStatus(JobStatus.Done, ctx, logger);
             jobsRepository.Update(job);
         }
     }

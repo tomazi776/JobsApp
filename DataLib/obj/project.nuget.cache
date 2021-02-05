@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "STbuUwJfETxh8GztzZ8OfcFoYT95yXhcGuIctJfW2mEDB9XCBbHtiHqACOQcpCijNIPg3dUb4dWilNQ77mYhng==",
+  "dgSpecHash": "JkVqMd2zeuEgfUNmnqVOFJucGFJH9ZsND2U7I+WcsBVZ2tfKNsX1aztmsuZaSHuE9Ig9VDvDriax37nW2xu64Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Tomek\\source\\repos\\MVCApp\\DataLib\\DataLib.csproj",
+  "projectFilePath": "C:\\src\\JobsApp\\DataLib\\DataLib.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Tomek\\.nuget\\packages\\entityframework\\6.4.0\\entityframework.6.4.0.nupkg.sha512"
+    "C:\\Users\\Tomasz\\.nuget\\packages\\entityframework\\6.4.0\\entityframework.6.4.0.nupkg.sha512"
   ],
   "logs": []
 }

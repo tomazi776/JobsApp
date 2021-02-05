@@ -1,30 +1,36 @@
 ﻿using DataLib;
+using DataLib.Services;
+using DataLib.Utilities;
 using MVCApp.Helpers;
 using MVCApp.Models;
 using MVCApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MVCApp.Controllers
 {
     public class JobsController : Controller
     {
-        private readonly IJobProcessorService _jobProcessorService;
-        public JobsController(IJobProcessorService jobProcessorService)
+        private readonly IJobProcessorService jobProcessorService;
+        private readonly ILogger logger;
+        public JobsController(IJobProcessorService jobProcessorService, ILogger logger)
         {
-            _jobProcessorService = jobProcessorService;
+            this.jobProcessorService = jobProcessorService;
+            this.logger = logger;
         }
 
         // GET: Tasks
         public ActionResult Index()
         {
-            DataLib.Services.IJobsRepository jobsRepository = new DataLib.Services.JobsRepository();
-            var modelJobs = jobsRepository.GetAllJobs();
-            List<Job> viewJobs = ModelMapper.MapAll(modelJobs);
+            List<Job> viewJobs = new List<Job>();
+            using (ZavenContext ctx = new ZavenContext())
+            {
+                IJobsRepository jobsRepository = new JobsRepository(ctx);
+                var modelJobs = jobsRepository.GetAllJobs();
+                viewJobs = ModelMapper.MapAll(modelJobs);
+            }
             return View(viewJobs);
         }
 
@@ -33,7 +39,7 @@ namespace MVCApp.Controllers
         [NoAsyncTimeout]
         public ActionResult Process()
         {
-            _jobProcessorService.ProcessJobs();
+            jobProcessorService.ProcessJobs();
             return RedirectToAction("Index");
         }
 
@@ -49,16 +55,22 @@ namespace MVCApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                DataLib.Services.IJobsRepository jobsRepository = new DataLib.Services.JobsRepository();
-                var modelJob = CreateMappedJob(name, doAfter);
-                var affectedRows = jobsRepository.SaveJob(modelJob);
-                if (affectedRows < 1)
+                using (ZavenContext ctx = new ZavenContext())
                 {
-                    return View();
-                }
-                else
-                {
-                    return RedirectToAction("Index");
+                    IJobsRepository jobsRepository = new JobsRepository(ctx);
+                    var job = CreateMappedJob(name, doAfter);
+                    try
+                    {
+                        jobsRepository.SaveJob(job);
+                        logger.Log(LogTarget.Database, ctx, null, job.Id, $"Job '{job.Name}' created successfully");
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        var existingJobId = ctx.Jobs.Where(j => j.Name == job.Name).First().Id;
+                        logger.Log(LogTarget.Database, ctx, ex, existingJobId, $"Job '{job.Name}' not created due to exception.");
+                        return View();
+                    }
                 }
             }
             return View();

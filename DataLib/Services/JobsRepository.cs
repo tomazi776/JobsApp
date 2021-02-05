@@ -1,56 +1,38 @@
 ﻿using DataLib.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLib.Services
 {
     public class JobsRepository : IJobsRepository
     {
-        //private readonly ZavenDotNetInterviewContext _ctx;
+        private readonly ZavenContext _ctx;
+        public JobsRepository(ZavenContext ctx)
+        {
+            _ctx = ctx;
+        }
 
-        //public JobsRepository(ZavenDotNetInterviewContext ctx)
-        //{
-        //    _ctx = ctx;
-        //}
         List<Job> Jobs = new List<Job>();
         public List<Job> GetAllJobs()
         {
-            List<Job> sortedJobs = new List<Job>();
-            using (ZavenContext context = new ZavenContext())
-            {
-                sortedJobs = context.Jobs.OrderBy(modificationDate => modificationDate.LastUpdatedAt).ToList();
-                //jobs = sortedJobs.ToList();
-            }
-            return sortedJobs;
+            return new List<Job>(_ctx.Jobs.OrderBy(modificationDate => modificationDate.LastUpdatedAt).ToList());
         }
 
         public int SaveJob(Job job)
         {
-            int affectedRows = 0;
-            using (ZavenContext context = new ZavenContext())
-            {
-                context.Jobs.Add(job);
-                affectedRows = context.SaveChanges();
-            }
-            return affectedRows;
+            _ctx.Jobs.Add(job);
+            return _ctx.SaveChanges();
         }
 
-        public void Update (Job item)
+        public void Update(Job job)
         {
-            using (ZavenContext context = new ZavenContext())
+            var searchedJob = _ctx.Jobs.Find(job.Id);
+            if (searchedJob == null)
             {
-                var entity = context.Jobs.Find(item.Id);
-                if (entity == null)
-                {
-                    return;
-                }
-                context.Entry(entity).CurrentValues.SetValues(item);
-                context.SaveChanges();
+                return;
             }
-            
+            _ctx.Entry(searchedJob).CurrentValues.SetValues(job);
+            _ctx.SaveChanges();
         }
     }
 }

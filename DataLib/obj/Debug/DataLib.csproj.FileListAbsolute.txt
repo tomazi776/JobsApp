@@ -9,3 +9,13 @@ C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.dll
 C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.pdb
 C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.Migrations.FailedCounter.resources
 C:\Users\Tomek\source\repos\MVCApp\DataLib\obj\Debug\DataLib.csproj.GenerateResource.cache
+C:\src\JobsApp\DataLib\bin\Debug\DataLib.dll
+C:\src\JobsApp\DataLib\bin\Debug\DataLib.pdb
+C:\src\JobsApp\DataLib\bin\Debug\EntityFramework.SqlServer.dll
+C:\src\JobsApp\DataLib\bin\Debug\EntityFramework.dll
+C:\src\JobsApp\DataLib\obj\Debug\DataLib.csproj.CoreCompileInputs.cache
+C:\src\JobsApp\DataLib\obj\Debug\DataLib.csproj.CopyComplete
+C:\src\JobsApp\DataLib\obj\Debug\DataLib.dll
+C:\src\JobsApp\DataLib\obj\Debug\DataLib.pdb
+C:\src\JobsApp\DataLib\obj\Debug\DataLib.Migrations.Initial.resources
+C:\src\JobsApp\DataLib\obj\Debug\DataLib.csproj.GenerateResource.cache
