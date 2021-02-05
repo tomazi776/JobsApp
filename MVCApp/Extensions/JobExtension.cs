@@ -1,7 +1,5 @@
 ﻿using DataLib;
 using DataLib.Services;
-using MVCApp.Helpers;
-using System;
 
 namespace MVCApp.Extensions
 {
@@ -13,12 +11,7 @@ namespace MVCApp.Extensions
             {
                 job.FailedCounter++;
             }
-
-            logger.Log(
-                DataLib.Utilities.LogTarget.Database,
-                ctx, null,
-                job.Id,
-                $"Changed '{job.Name}' status to - '{newStatus}'");
+            logger.Log(DataLib.Utilities.LogTarget.Database,ctx, null,job.Id,$"Changed '{job.Name}' status to - '{newStatus}'");
             job.Status = job.FailedCounter < 5 ? newStatus : JobStatus.Closed;
         }
     }

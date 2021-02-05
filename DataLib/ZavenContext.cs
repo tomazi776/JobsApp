@@ -1,10 +1,5 @@
 ﻿using DataLib.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLib
 {
@@ -16,8 +11,6 @@ namespace DataLib
         public ZavenContext() : base("name=DataLibDbCnn")
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<ZavenContext>());
-            //Database.SetInitializer(new DropCreateDatabaseAlways<ZavenDotNetInterviewContext>());
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<ZavenDotNetInterviewContext, Migrations.Configuration>());
         }
     }
 }

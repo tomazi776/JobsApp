@@ -20,15 +20,12 @@ namespace DataLib.Utilities
                 CreatedAt = DateTime.Now,
                 Description = BuildLogs(ex, msg)
             };
+            // use separate context
             using (ZavenContext context = new ZavenContext())
             {
-
                 context.Logs.Add(log);
                 context.SaveChanges();
             }
-
-            //ctx.Logs.Add(log);
-            //ctx.SaveChanges();
         }
 
         public override void Log(Guid processedJobId, string msg)

@@ -7,8 +7,6 @@ using MVCApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MVCApp.Controllers
@@ -73,17 +71,6 @@ namespace MVCApp.Controllers
                         logger.Log(LogTarget.Database, ctx, ex, existingJobId, $"Job '{job.Name}' not created due to exception.");
                         return View();
                     }
-
-                    //if (affectedRows > 0)
-                    //{
-                    //    logger.Log(LogTarget.Database, ctx, null, job.Id, "Job created successfully");
-                    //    return RedirectToAction("Index");
-                    //}
-                    //else
-                    //{
-                    //    logger.Log(LogTarget.Database, ctx, null, job.Id, "Job not created");
-                    //    return View();
-                    //}
                 }
             }
             return View();
